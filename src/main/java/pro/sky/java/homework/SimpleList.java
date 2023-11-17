@@ -1,5 +1,9 @@
 package pro.sky.java.homework;
 
+import java.util.Comparator;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 public interface SimpleList<E> {
     // Добавление элемента.
     // Вернуть добавленный элемент
@@ -76,4 +80,6 @@ public interface SimpleList<E> {
     // из строк в списке
     // и вернуть его.
     E[] toArray();
+
+    void sort();
 }
