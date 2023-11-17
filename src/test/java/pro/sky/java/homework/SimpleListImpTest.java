@@ -145,7 +145,7 @@ class SimpleListImpTest {
 
     @Test
     public void whenContainElement() {
-        SimpleListImp<Integer> simpleList = new SimpleListImp<>(ARRAY, INSERT_SORT, BINARY_COMPARATOR);
-        assertTrue(simpleList.contains(34));
+        SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, INSERT_SORT, BINARY_COMPARATOR);
+        assertTrue(simpleList.contains(NUM_FOR_TEST_ARRAY));
     }
 }

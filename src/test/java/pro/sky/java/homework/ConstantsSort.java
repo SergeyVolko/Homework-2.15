@@ -4,12 +4,13 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 
 public class ConstantsSort {
-    public static final Integer[] ARRAY = GenerateArray.getArrays(50);
+    public static final Integer[] ARRAY = GenerateArray.getArrays(100000);
     public static final Integer[] TEST_ARRAY = GenerateArray.getArrays(20);
     public static final Integer[] SORT_ARRAY = IntStream.range(0, 20).boxed().toArray(Integer[]::new);
     public static final String NAME_METHOD_BUBBLE = "Bubble sort";
     public static final String NAME_METHOD_SELECT = "Select sort";
     public static final String NAME_METHOD_INSERT = "Insert sort";
+    public static final int NUM_FOR_TEST_ARRAY = 12;
     public static final Comparator<Integer> BINARY_COMPARATOR = Comparator.comparingInt(o -> o);
     public static final SortedMethod<Integer> BUBBLE_SORT = new SortedMethod<>(
             Comparator.comparingInt(o -> o),
