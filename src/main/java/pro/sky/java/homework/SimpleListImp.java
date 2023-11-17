@@ -2,15 +2,18 @@ package pro.sky.java.homework;
 
 import pro.sky.java.homework.exceptions.ElementNotFoundException;
 import pro.sky.java.homework.exceptions.IndexNotFoundException;
+import pro.sky.java.homework.exceptions.NotMethodSortException;
 import pro.sky.java.homework.exceptions.ParamNullException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.stream.IntStream;
 
 public class SimpleListImp<E> implements SimpleList<E> {
     private static final int CAPACITY = 10;
     private int size = 0;
-
     private Object[] elements;
+    private SortedMethod<E> sortedMethod;
+    private Comparator<E> binaryComparator;
 
     public SimpleListImp() {
         this.elements = new Object[CAPACITY];
@@ -18,6 +21,17 @@ public class SimpleListImp<E> implements SimpleList<E> {
     public SimpleListImp(E[] elements) {
         this.elements = Arrays.copyOf(elements, elements.length);
         this.size = elements.length;
+    }
+
+    public SimpleListImp(E[] elements, SortedMethod<E> sortedMethod) {
+        this(elements);
+        this.sortedMethod = sortedMethod;
+    }
+
+    public SimpleListImp(E[] elements, SortedMethod<E> sortedMethod, Comparator<E> binaryComparator) {
+        this(elements);
+        this.sortedMethod = sortedMethod;
+        this.binaryComparator = binaryComparator;
     }
 
     @Override
@@ -71,7 +85,10 @@ public class SimpleListImp<E> implements SimpleList<E> {
     @Override
     public boolean contains(E item) {
         validateElement(item);
-        return indexOf(item) >= 0;
+        if (binaryComparator == null) {
+            return indexOf(item) >= 0;
+        }
+        return containBinary(item);
     }
 
     @Override
@@ -126,6 +143,18 @@ public class SimpleListImp<E> implements SimpleList<E> {
         return (E[]) Arrays.copyOf(elements, size);
     }
 
+    @Override
+    public void sort() {
+        sort((E[])elements);
+    }
+
+    private void sort(E[] array) {
+        if (sortedMethod == null) {
+            throw new NotMethodSortException();
+        }
+        sortedMethod.getBiConsumer().accept(array, sortedMethod.getComparator());
+    }
+
     private void resizeArray() {
         if (size >= elements.length) {
             elements = Arrays.copyOf(elements, elements.length + CAPACITY);
@@ -143,5 +172,24 @@ public class SimpleListImp<E> implements SimpleList<E> {
         if (item == null) {
             throw new ParamNullException();
         }
+    }
+
+    private boolean containBinary(E item) {
+        E[] a = (E[]) Arrays.copyOf(elements, elements.length);
+        sort(a);
+        int min = 0;
+        int max = a.length;
+        while (min <= max) {
+            int mid = (min + max) / 2;
+            if (a[mid].equals(item)) {
+                return true;
+            }
+            if (binaryComparator.compare(item, a[mid]) < 0) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
     }
 }

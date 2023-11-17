@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static pro.sky.java.homework.ConstantsStringForTest.*;
 import static pro.sky.java.homework.ConstantsIntegerForTest.*;
+import static pro.sky.java.homework.ConstantsSort.*;
 
 class SimpleListImpTest {
     public static Stream<Arguments> getParamsForAddIndexTest() {
@@ -113,5 +114,38 @@ class SimpleListImpTest {
         SimpleList<Integer> simpleList = new SimpleListImp<>(NUMS);
         simpleList.add(ELEVEN_N);
         assertEquals(ELEVEN_N, simpleList.get(simpleList.size() - 1));
+    }
+
+    @Test
+    public void whenEqualsNumsThen() {
+        SimpleList<Integer> simpleList = new SimpleListImp<>(NUMS);
+        assertArrayEquals(NUMS, simpleList.toArray());
+    }
+
+    @Test
+    public void whenSortBubbleThenEqualSortArray() {
+        SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, BUBBLE_SORT);
+        simpleList.sort();
+        assertArrayEquals(SORT_ARRAY, simpleList.toArray());
+    }
+
+    @Test
+    public void whenSortSelectThenEqualSortArray() {
+        SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, SELECT_SORT);
+        simpleList.sort();
+        assertArrayEquals(SORT_ARRAY, simpleList.toArray());
+    }
+
+    @Test
+    public void whenSortInsertThenEqualSortArray() {
+        SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, INSERT_SORT);
+        simpleList.sort();
+        assertArrayEquals(SORT_ARRAY, simpleList.toArray());
+    }
+
+    @Test
+    public void whenContainElement() {
+        SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, INSERT_SORT, BINARY_COMPARATOR);
+        assertTrue(simpleList.contains(NUM_FOR_TEST_ARRAY));
     }
 }
