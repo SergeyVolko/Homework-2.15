@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 
 public class SimpleListImp<E> implements SimpleList<E> {
     private static final int CAPACITY = 10;
+    private static final double MULTIPLE = 1.5;
     private int size = 0;
     private Object[] elements;
     private SortedMethod<E> sortedMethod;
@@ -37,7 +38,7 @@ public class SimpleListImp<E> implements SimpleList<E> {
     @Override
     public E add(E item) {
         validateElement(item);
-        resizeArray();
+        grow();
         elements[size++] = item;
         return item;
     }
@@ -46,7 +47,7 @@ public class SimpleListImp<E> implements SimpleList<E> {
     public E add(int index, E item) {
         validateElement(item);
         validateIndex(index);
-        resizeArray();
+        grow();
         System.arraycopy(elements, index, elements, index + 1, size - index);
         elements[index] = item;
         size++;
@@ -155,9 +156,9 @@ public class SimpleListImp<E> implements SimpleList<E> {
         sortedMethod.getBiConsumer().accept(array, sortedMethod.getComparator());
     }
 
-    private void resizeArray() {
+    private void grow() {
         if (size >= elements.length) {
-            elements = Arrays.copyOf(elements, elements.length + CAPACITY);
+            elements = Arrays.copyOf(elements, (int)(elements.length * MULTIPLE));
         }
     }
 

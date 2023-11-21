@@ -148,4 +148,11 @@ class SimpleListImpTest {
         SimpleListImp<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, INSERT_SORT, BINARY_COMPARATOR);
         assertTrue(simpleList.contains(NUM_FOR_TEST_ARRAY));
     }
+
+    @Test
+    public void whereContainElementAfterFastSort() {
+        SimpleList<Integer> simpleList = new SimpleListImp<>(TEST_ARRAY, FAST_SORTED, BINARY_COMPARATOR);
+        simpleList.sort();
+        assertArrayEquals(SORT_ARRAY, simpleList.toArray());
+    }
 }
